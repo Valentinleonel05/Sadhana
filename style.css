@@ -288,7 +288,16 @@
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
 }
-#modal-info .modal-btns button:hover, #modal-info .modal-btns a:hover {
+#modal-info .modal-btns a:hover {
+  background: #c0392b;
+  color: #fff;
+}
+#modal-info .modal-btns button:hover,
+#modal-info .modal-btns button:focus {
+  background: #333;
+  color: #fff;
+}
+#modal-info .modal-btns button:active {
   background: #c0392b;
   color: #fff;
 }
