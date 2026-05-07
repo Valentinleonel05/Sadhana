@@ -122,7 +122,7 @@ function renderizarProductos(productos) {
     const item = document.createElement('div');
     item.className = 'item';
     item.innerHTML = `
-      <img src="${producto.Imagen}" alt="${producto.Nombre}">
+      <img src="${producto.Imagen}" alt="${producto.Nombre}" loading="lazy" decoding="async">
       <h3>${producto.Nombre}</h3>
       <p>${producto.Descripcion}</p>
       <span>$${producto.Precio}</span>
@@ -147,7 +147,7 @@ function mostrarModalProducto(producto) {
     return `https://wa.me/${numeroWsp}?text=${getMensaje()}`;
   }
   modalInfo.innerHTML = `
-    <img src="${producto.Imagen}" alt="${producto.Nombre}">
+    <img src="${producto.Imagen}" alt="${producto.Nombre}" loading="lazy" decoding="async">
     <h2>${producto.Nombre}</h2>
     <p>${producto.Descripcion}</p>
     <div class="precio">$${producto.Precio}</div>
