@@ -29,6 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
       mostrarErrorCarga();
     });
 
+  const buscador = document.getElementById('buscador-productos');
+  if (buscador) {
+    buscador.addEventListener('input', () => {
+      terminoBusqueda = buscador.value.trim().toLowerCase();
+      aplicarFiltros();
+    });
+  }
+
   function mostrarErrorCarga() {
     const grid = document.querySelector('.menu-grid');
     if (grid) {
@@ -43,6 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let productosGlobal = [];
 let carrito = [];
+let categoriaActiva = null;
+let terminoBusqueda = '';
 function mostrarCategorias(productos) {
   productosGlobal = productos;
   const contenedor = document.getElementById('categorias-btns');
@@ -58,7 +68,8 @@ function mostrarCategorias(productos) {
     btnTodos.textContent = 'Todas';
     btnTodos.className = 'categoria-btn active';
     btnTodos.onclick = () => {
-      renderizarProductos(productosGlobal);
+      categoriaActiva = null;
+      aplicarFiltros();
       setActive(btnTodos);
     };
     contenedor.appendChild(btnTodos);
@@ -69,7 +80,8 @@ function mostrarCategorias(productos) {
     btn.textContent = cat;
     btn.className = 'categoria-btn';
     btn.onclick = () => {
-      filtrarPorCategoria(cat);
+      categoriaActiva = cat;
+      aplicarFiltros();
       setActive(btn);
     };
     contenedor.appendChild(btn);
@@ -84,9 +96,28 @@ function filtrarPorCategoria(categoria) {
   const filtrados = productosGlobal.filter(p => p.Categoria === categoria);
   renderizarProductos(filtrados);
 }
+
+function aplicarFiltros() {
+  let filtrados = [...productosGlobal];
+  if (categoriaActiva) {
+    filtrados = filtrados.filter(p => p.Categoria === categoriaActiva);
+  }
+  if (terminoBusqueda) {
+    filtrados = filtrados.filter(producto => {
+      const texto = `${producto.Nombre} ${producto.Descripcion} ${producto.Categoria}`.toLowerCase();
+      return texto.includes(terminoBusqueda);
+    });
+  }
+  renderizarProductos(filtrados);
+}
+
 function renderizarProductos(productos) {
   const grid = document.querySelector('.menu-grid');
   grid.innerHTML = '';
+  if (!productos.length) {
+    grid.innerHTML = '<div class="estado-vacio">No se encontraron productos con ese criterio.</div>';
+    return;
+  }
   productos.forEach(producto => {
     const item = document.createElement('div');
     item.className = 'item';
