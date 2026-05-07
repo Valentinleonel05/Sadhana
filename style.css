@@ -354,11 +354,6 @@ min-height: 100vh;
 }
 
 body{
-background-image: url('images/1c5e5ca1cdb7a24b8be630575fcb334c.jpg');
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: fixed;
 color:#0c0c0c;
 max-width: 100%;
 display: flex;
